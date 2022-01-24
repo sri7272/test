@@ -37,4 +37,6 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: cicdexamples/colorexample:latest
+        tags: |
+          cicdexamples/colorexample:latest
+          cicdexamples/colorexample:${GITHUB_SHA::8}
