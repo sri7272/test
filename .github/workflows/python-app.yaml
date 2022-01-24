@@ -13,7 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      SHA8: ${GITHUB_SHA::8}
+      SHA8: $(echo ${GITHUB_SHA::8})
 
     steps:
     - name: Check out the repo
