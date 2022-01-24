@@ -12,6 +12,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      SHA8: ${GITHUB_SHA::8}
 
     steps:
     - name: Check out the repo
@@ -39,4 +41,4 @@ jobs:
         push: true
         tags: |
           cicdexamples/colorexample:latest
-          cicdexamples/colorexample:${GITHUB_SHA::8}
+          cicdexamples/colorexample:${{ env.SHA8 }}
