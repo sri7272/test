@@ -12,12 +12,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      SHA8: $(echo ${GITHUB_SHA::8})
 
     steps:
     - name: Check out the repo
       uses: actions/checkout@v2
+
+    - name: Get the git commit short hash
+      id: commit_short_hash
+      run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
 
     - name: Set up Python 3.9
       uses: actions/setup-python@v2
@@ -41,4 +43,4 @@ jobs:
         push: true
         tags: |
           cicdexamples/colorexample:latest
-          cicdexamples/colorexample:${{ env.SHA8 }}
+          cicdexamples/colorexample:${{ steps.commit_short_hash.outputs.sha8 }}
