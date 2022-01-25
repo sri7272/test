@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-# FIXME: Make a flask app the hosts a simple single-page app that gets the color from an API request.
-
 ### IMPORTS ###
 import os
 
@@ -52,13 +50,13 @@ app = Flask(__name__)
 def app_startup():
     tmp_color = os.getenv('COLOR', None)
     if tmp_color is None:
-        raise ValueError("Color not set.  Please set environment variable 'COLOR' to a hex code or a named color.")
+        raise RuntimeError("Color not set.  Please set environment variable 'COLOR' to a hex code or a named color.")
     if (len(tmp_color) == 7) and (tmp_color[0] == '#'):
         app.config['COLOR'] = tmp_color
     elif tmp_color.lower() in COLOR_TABLE:
         app.config['COLOR'] = COLOR_TABLE[tmp_color.lower()]
     else:
-        raise ValueError("Invalid color set.  Please use one of {} or a six digit hex-code.".format(COLOR_TABLE))
+        raise RuntimeError("Invalid color set.  Please use one of {} or a six digit hex-code.".format(COLOR_TABLE))
 
 @app.route("/api/color", methods=['GET'])
 def get_color():

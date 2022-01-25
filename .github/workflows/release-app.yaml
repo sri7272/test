@@ -1,5 +1,5 @@
 # This workflow will run when a new tag starting with 'v' is created and retag the image for the matching commit.
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+# For more information see: https://stackoverflow.com/questions/63932728/github-action-release-tag
 
 name: Release Application
 
