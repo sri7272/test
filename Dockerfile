@@ -1,10 +1,10 @@
 #https://blog.realkinetic.com/building-minimal-docker-containers-for-python-applications-37d0272c52f3
 FROM python:3.9-slim
 
-RUN pip install -r uwsgi
+RUN pip install --no-cache-dir uwsgi
 
 COPY requirements.txt /
-RUN pip install -r /requirements.txt
+RUN pip install --no-cache-dir -r /requirements.txt
 
 COPY . /app
 WORKDIR /app
