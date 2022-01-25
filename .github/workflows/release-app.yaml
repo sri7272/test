@@ -9,13 +9,10 @@ on:
       - 'v*' # Should this be 'v*.*.*'?
 
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
 
     steps:
-    #- name: Check out the repo
-    #  uses: actions/checkout@v2
-
     - name: Get the git commit short hash
       id: git_commit_info
       run: |
@@ -28,7 +25,7 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Build and push Docker image
+    - name: Pull Docker image
       id: docker_image_pull
       run: docker pull cicdexamples/colorexample:${{ steps.git_commit_info.outputs.short_sha }}
 
