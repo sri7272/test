@@ -4,6 +4,8 @@
 import os
 
 from flask import Flask
+from waitress import serve
+from paste.translogger import TransLogger
 
 ### GLOBALS ###
 COLOR_TABLE = {
@@ -70,4 +72,14 @@ def index():
 
 ### MAIN ###
 if __name__ == "__main__":
-    app.run()
+    # This really should be left for the app.before_first_request hook, but I want the process to error out instead of
+    # serving an "500: Internal Server Error".
+    app_startup()
+
+    # paste.translogger.TransLogger is a wsgi middleware to add Apache Access Log style logging to WSGI servers.
+    # This is needed as waitress only logs errors, not any access information.
+    # Hook the TransLogger middleware into the wsgi_app thingamajig
+    app.wsgi_app = TransLogger(app.wsgi_app)
+
+    # Using waitress as a "production" WSGI server.  Normally I'd use uWSGI, but I'm going for simple this time.
+    serve(app, host='0.0.0.0', port='5000')
